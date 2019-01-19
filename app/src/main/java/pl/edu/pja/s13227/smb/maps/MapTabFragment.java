@@ -55,7 +55,7 @@ public class MapTabFragment extends Fragment implements OnMapReadyCallback {
                         @Override
                         public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                             FavoriteShop shop = dataSnapshot.getValue(FavoriteShop.class);
-                            drawMarker(googleMap, shop);
+                            drawMarker(shop);
                         }
 
                         @Override
@@ -95,22 +95,25 @@ public class MapTabFragment extends Fragment implements OnMapReadyCallback {
         this.googleMap = googleMap;
     }
 
-    private void drawMarker(GoogleMap googleMap, FavoriteShop shop) {
+    public void drawMarker(FavoriteShop shop) {
 
         int strokeColor = 0xffff0000; //red outline
         int shadeColor = 0x44ff0000; //opaque red fill
 
-        markers.put(shop, googleMap.addMarker(new MarkerOptions()
-                .position(shop.getCoordinates())
-                .title(shop.getName())
-                .snippet(shop.getDescription())));
-
-        circles.put(shop, googleMap.addCircle(new CircleOptions()
-                .center(shop.getCoordinates())
-                .radius(shop.getRadius())
-                .fillColor(shadeColor)
-                .strokeColor(strokeColor)
-                .strokeWidth(8)));
+        if (!markers.containsKey(shop)){
+            markers.put(shop, googleMap.addMarker(new MarkerOptions()
+                    .position(shop.getCoordinates())
+                    .title(shop.getName())
+                    .snippet(shop.getDescription())));
+        }
+        if (!circles.containsKey(shop)) {
+            circles.put(shop, googleMap.addCircle(new CircleOptions()
+                    .center(shop.getCoordinates())
+                    .radius(shop.getRadius())
+                    .fillColor(shadeColor)
+                    .strokeColor(strokeColor)
+                    .strokeWidth(8)));
+        }
     }
 
     public void removeMarker(FavoriteShop shop) {
