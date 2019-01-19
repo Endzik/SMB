@@ -32,8 +32,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new MapTabFragment(), "MAP");
-        adapter.addFragment(new ShopListFragment(), "SHOP LIST");
+        MapTabFragment mapTabFragment = new MapTabFragment();
+        adapter.addFragment(mapTabFragment, "MAP");
+        ShopListFragment listFragment = new ShopListFragment();
+        listFragment.setMap(mapTabFragment);
+        adapter.addFragment(listFragment, "SHOP LIST");
         viewPager.setAdapter(adapter);
     }
 

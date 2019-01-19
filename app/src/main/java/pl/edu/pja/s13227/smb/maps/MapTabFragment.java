@@ -2,6 +2,7 @@ package pl.edu.pja.s13227.smb.maps;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,14 +12,25 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MapTabFragment extends Fragment implements OnMapReadyCallback {
 
     private MapView mapView;
     private GoogleMap googleMap;
     private MapUtils mapUtils;
+    private Map<FavoriteShop, Marker> markers = new HashMap<>();
+    private Map<FavoriteShop, Circle> circles = new HashMap<>();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -38,19 +50,40 @@ public class MapTabFragment extends Fragment implements OnMapReadyCallback {
                     googleMap = gmap;
                     googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
-                    FavoriteShop shop = new FavoriteShop(
-                            "Test Name",
-                            "Test description",
-                            53.551, 9.993,
-                            50.0);
+                    FirebaseDatabase.getInstance().getReference().child("shops")
+                            .addChildEventListener(new ChildEventListener() {
+                        @Override
+                        public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                            FavoriteShop shop = dataSnapshot.getValue(FavoriteShop.class);
+                            drawMarker(googleMap, shop);
+                        }
 
-                    drawMarker(googleMap, shop);
+                        @Override
+                        public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                        }
+
+                        @Override
+                        public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                            FavoriteShop shop = dataSnapshot.getValue(FavoriteShop.class);
+                            Marker marker = markers.get(shop);
+                            if (marker != null) marker.remove();
+                            Circle circle = circles.get(shop);
+                            if (circle != null) circle.remove();
+                        }
+
+                        @Override
+                        public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
 
                     mapUtils.zoomToCurrentPosition(googleMap);
-                    //fill markers
-                    //add marker listener
-
-
                 }
             });
         }
@@ -67,16 +100,23 @@ public class MapTabFragment extends Fragment implements OnMapReadyCallback {
         int strokeColor = 0xffff0000; //red outline
         int shadeColor = 0x44ff0000; //opaque red fill
 
-        googleMap.addMarker(new MarkerOptions()
+        markers.put(shop, googleMap.addMarker(new MarkerOptions()
                 .position(shop.getCoordinates())
                 .title(shop.getName())
-                .snippet(shop.getDescription()));
+                .snippet(shop.getDescription())));
 
-        googleMap.addCircle(new CircleOptions()
+        circles.put(shop, googleMap.addCircle(new CircleOptions()
                 .center(shop.getCoordinates())
                 .radius(shop.getRadius())
                 .fillColor(shadeColor)
                 .strokeColor(strokeColor)
-                .strokeWidth(8));
+                .strokeWidth(8)));
+    }
+
+    public void removeMarker(FavoriteShop shop) {
+        Marker marker = markers.get(shop);
+        if (marker != null) marker.remove();
+        Circle circle = circles.get(shop);
+        if (circle != null) circle.remove();
     }
 }
