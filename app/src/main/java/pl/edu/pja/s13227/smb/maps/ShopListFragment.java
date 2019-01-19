@@ -82,8 +82,6 @@ public class ShopListFragment extends ListFragment {
 
             }
         });
-//        addShop(new FavoriteShop("aw4t4td23434", "f2343qrq344fw4fs", 40.0, 43.0, 25));
-//        addShop(new FavoriteShop("aawdaw23234w4dwd", "f4fw4e3rw3rgthuiyufs", 30.0, 40.0, 25));
         setListAdapter(adapter);
 
         getActivity().findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
