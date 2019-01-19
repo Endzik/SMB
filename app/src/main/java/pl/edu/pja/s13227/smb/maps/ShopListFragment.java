@@ -99,8 +99,8 @@ public class ShopListFragment extends ListFragment {
                 new MapUtils(getActivity()).currentPositionTask().addOnSuccessListener(new OnSuccessListener<Location>() {
                     @Override
                     public void onSuccess(Location location) {
-                        latitude.setText(String.format(Locale.getDefault(), "%.2f", location.getLatitude()));
-                        longitude.setText(String.format(Locale.getDefault(), "%.2f", location.getLongitude()));
+                        latitude.setText(String.format(Locale.getDefault(), "%.5f", location.getLatitude()));
+                        longitude.setText(String.format(Locale.getDefault(), "%.5f", location.getLongitude()));
                     }
                 });
                 new AlertDialog.Builder(getContext())
