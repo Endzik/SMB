@@ -3,4 +3,10 @@
 
     <string name="map_title">Favorite Shops Map</string>
     <string name="shop_list_title">Favorite Shops List</string>
+
+    <string name="appwidget_text">SMB Widget</string>
+    <string name="add_widget">Add widget</string>
+
+    <string name="previous"><![CDATA[<]]></string>
+    <string name="next"><![CDATA[>]]></string>
 </resources>

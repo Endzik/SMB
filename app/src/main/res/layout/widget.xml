@@ -1,0 +1,105 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#00CC3A"
+    android:padding="@dimen/widget_margin">
+
+    <TextView
+        android:id="@+id/appwidget_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:background="#039B05"
+        android:contentDescription="@string/appwidget_text"
+        android:text="@string/appwidget_text"
+        android:textColor="#ffffff"
+        android:textSize="24sp"
+        android:textStyle="bold|italic" />
+
+    <TextView
+        android:id="@+id/musicTitle"
+        android:layout_width="217dp"
+        android:layout_height="29dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="63dp"
+        android:textAlignment="center"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/buttonPlay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/musicTitle"
+        android:layout_alignBottom="@+id/buttonStop"
+        android:layout_marginStart="62dp"
+        android:layout_marginBottom="98dp"
+        android:text="Play" />
+
+    <Button
+        android:id="@+id/buttonStop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/musicTitle"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="193dp"
+        android:layout_marginEnd="64dp"
+        android:text="Stop" />
+
+    <Button
+        android:id="@+id/browser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/appwidget_text"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="-109dp"
+        android:layout_toStartOf="@+id/appwidget_text"
+        android:onClick="defaultBrowserPage"
+        android:text="Browser" />
+
+    <Button
+        android:id="@+id/buttonPause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/buttonPlay"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="-41dp"
+        android:text="Pause" />
+
+    <Button
+        android:id="@+id/buttonPrevious"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/buttonPlay"
+        android:layout_marginTop="151dp"
+        android:layout_marginEnd="-91dp"
+        android:layout_toStartOf="@+id/musicTitle"
+        android:text="@string/previous" />
+
+    <Button
+        android:id="@+id/buttonNext"
+        android:layout_width="47dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/buttonStop"
+        android:layout_marginStart="-84dp"
+        android:layout_marginTop="55dp"
+        android:layout_toEndOf="@+id/musicTitle"
+        android:text="@string/next" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/buttonPrevious"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
+        app:srcCompat="@drawable/png-download-free-1" />
+
+</RelativeLayout>

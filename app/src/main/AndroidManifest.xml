@@ -3,6 +3,7 @@
     package="pl.edu.pja.s13227.smb.maps">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -21,6 +22,19 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value=""/>
+        <service android:name=".GeofenceTransitionsIntentService" />
+        <receiver android:name=".WidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_info"/>
+        </receiver>
+        <activity android:name=".WidgetConfigure"/>
+        <receiver android:name=".MusicBroadcastReceiver" android:process=":remote">
+            <intent-filter>
+                <action android:name="com.example.broadcast.music"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
